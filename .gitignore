@@ -1,0 +1,7 @@
+node_modules/
+test_squat.mp4
+token.json
+package-lock.json
+.env
+/videos/*
+!/videos/
