@@ -17,6 +17,7 @@ This API allows you perform AI analysis on a video by uploading it to the Guru A
 ```bash
 GURU_CLIENT_ID=YOUR_CLIENT_ID_HERE
 GURU_CLIENT_SECRET=YOUR_CLIENT_SECRET_HERE
+GURU_SCHEMA_ID=YOUR_SCHEMA_ID
 ```
 
 - Or set envronment variables:
@@ -24,6 +25,7 @@ GURU_CLIENT_SECRET=YOUR_CLIENT_SECRET_HERE
 ```bash
 export GURU_CLIENT_ID=your_client_id
 export GURU_CLIENT_SECRET=your_client_secret
+export GURU_SCHEMA_ID=your_guru_schema_id
 ```
 
 - Add a test video to `/videos`

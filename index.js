@@ -9,35 +9,9 @@ const app = express();
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-// Endpoint for analyzing a video
-app.post("/analyze-video", async (req, res) => {
-  try {
-    console.log("Fetching token...");
-    const authToken = await getToken();
-    console.log("Fetched token.");
-
-    console.log("Uploading video...");
-    const videoId = await uploadVideo(authToken);
-    console.log(`Uploaded video ${videoId}.`);
-
-    console.log(`Fetching video analysis for video ${videoId}...`);
-    const analysisData = await getAnalysis(videoId, authToken);
-
-    res.json(analysisData);
-  } catch (error) {
-    console.error("Error in /analyze-video:", error.message);
-    next(error);
-  }
-});
-
-app.use((err, req, res, next) => {
-  res.status(500).json({ error: err.message });
-});
+const client_id = process.env.GURU_CLIENT_ID;
+const client_secret = process.env.GURU_CLIENT_SECRET;
+const schema_id = process.env.GURU_SCHEMA_ID;
 
 // Function to get an access token
 const getToken = async () => {
@@ -47,9 +21,6 @@ const getToken = async () => {
       return tokenData.token; // return existing token if it's still valid
     }
   }
-
-  const client_id = process.env.GURU_CLIENT_ID;
-  const client_secret = process.env.GURU_CLIENT_SECRET;
 
   const options = {
     method: "POST",
@@ -75,7 +46,7 @@ const uploadVideo = async (authToken) => {
   const videoData = {
     filename: "test_squat.mp4",
     size: videoSizeInBytes,
-    schemaId: "1569597a-3b59-45bf-9048-7287be905f48",
+    schemaId: schema_id,
     source: "guru-api-test",
   };
 
@@ -123,3 +94,32 @@ const getAnalysis = async (videoId, authToken) => {
 
   throw new Error("Video analysis did not complete in the expected time.");
 };
+
+// Endpoint for analyzing a video
+app.post("/analyze-video", async (req, res, next) => {
+  try {
+    console.log("Fetching token...");
+    const authToken = await getToken();
+    console.log("Fetched token.");
+
+    console.log("Uploading video...");
+    const videoId = await uploadVideo(authToken);
+    console.log(`Uploaded video ${videoId}.`);
+
+    console.log(`Fetching video analysis for video ${videoId}...`);
+    const analysisData = await getAnalysis(videoId, authToken);
+
+    res.json(analysisData);
+  } catch (error) {
+    console.error("Error in /analyze-video:", error.message);
+    next(error);
+  }
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
