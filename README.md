@@ -1,8 +1,8 @@
-# Guru API Test - Express Application
+# Guru API Integration with Express.js
 
 ## Introduction
 
-This Express application provides an interface to interact with the Guru API.
+This repository provides an example Express.js application for integrating Guru's API into your server-side code. It demonstrates how to obtain an access token, upload a video, and fetch video analysis using the Guru API.
 
 ### Analyze Video API
 
@@ -11,6 +11,7 @@ This API allows you perform AI analysis on a video by uploading it to the Guru A
 #### Prerequisites
 
 - Node.js & npm installed
+- A Guru API client ID and client secret. To find yours, go to https://console.getguru.ai/
 - A .env file in the root of your project with the following content:
 
 ```bash
@@ -38,11 +39,11 @@ node index.js
 
 #### Testing from the CLI
 
-To test the `/analyze-video` endpoint from the command line, you can use tools like curl.
+To test the `/analyze-video` endpoint from the command line, you can use tools like `curl`.
 
 Here's how you can do it:
 
-- Make sure the video file test_squat.mp4 is present in the root directory of the project.
+- Make sure the video file `test.mp4` is present in `/videos`.
 - Run the following command:
 
 ```bash
@@ -54,3 +55,9 @@ This should initiate the process of fetching a token, uploading the video, and g
 If successful, you'll receive a JSON response with the analysis data. If there's an error, it will return an appropriate error message.
 
 For support, reach out to support@getguru.ai or join the Guru Discord server.
+
+### License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Happy coding!
